@@ -69,27 +69,27 @@ import java.util.ArrayList
         println("========================================================")
         println("Expression: " + "2 * (3 + 5)")
 
-        // Build tree root.
-        val t1 = Tree()
-        val rootNode = Node(0)
-        rootNode.content = ('*')
-        t1.rootNode = (rootNode)
-
-        // Build tree root's left child.
-        val rootLeftChild = Node(2)
-        t1.rootNode.leftNode = rootLeftChild
-
-        // Build tree root's right child.
-        val rootRightChild = Node('+')
-        t1.rootNode.rightNode = rootRightChild
-        var v: IVisitor = CalculateVisitor()
-
-        println("Calculated value: " + t1.traverse(v))
-
-        v = PrefixPrintVisitor()
-
-        print("Prefix print assembly: ")
-        println(t1.traverse(v))
+//        // Build tree root.
+//        val t1 = Tree()
+//        val rootNode = Node(0)
+//        rootNode.content = ('*')
+//        t1.rootNode = (rootNode)
+//
+//        // Build tree root's left child.
+//        val rootLeftChild = Node(2)
+//        t1.rootNode.leftNode = rootLeftChild
+//
+//        // Build tree root's right child.
+//        val rootRightChild = Node('+')
+//        t1.rootNode.rightNode = rootRightChild
+//        var v: IVisitor = CalculateVisitor()
+//
+//        println("Calculated value: " + t1.traverse(v))
+//
+//        v = PrefixPrintVisitor()
+//
+//        print("Prefix print assembly: ")
+//        println(t1.traverse(v))
 
         ///////////////////// (5+3)-4 /////////////////////////////////////
     }

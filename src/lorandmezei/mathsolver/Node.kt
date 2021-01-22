@@ -2,14 +2,9 @@ package lorandmezei.mathsolver
 
 class Node(content: Any = 0)
 {
-    lateinit var content: Any
-    lateinit var leftNode: Node
-    lateinit var rightNode : Node
-
-    init
-    {
-        this.content = content
-    }
+    var content: Any = content
+    var leftNode: Node? = null
+    var rightNode : Node? = null
 
     fun accept(visitor : IVisitor) : Any?
     {

@@ -22,8 +22,8 @@ class PrefixPrintVisitor : IVisitor
             }
 
             // Recursion.
-            node.leftNode.accept(this)
-            node.rightNode.accept(this)
+            node.leftNode!!.accept(this)
+            node.rightNode!!.accept(this)
         }
 
         else
