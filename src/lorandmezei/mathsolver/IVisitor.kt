@@ -1,4 +1,4 @@
 package lorandmezei.mathsolver
 
-class IVisitor {
+interface IVisitor {
 }
