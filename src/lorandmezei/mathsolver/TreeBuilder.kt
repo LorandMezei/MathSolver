@@ -98,35 +98,23 @@ class TreeBuilder
         var priority = false
 
         // Check char has greater priority.
-        if ((currentChar.equals('*') || currentChar.equals('/')) &&
-            (rootChar.equals('+') || rootChar.equals('-'))
-        )
+        if ((currentChar.equals('*') || currentChar.equals('/')) && (rootChar.equals('+') || rootChar.equals('-')))
         {
             priority = true
         }
-        else if ((currentChar.equals('*') || currentChar.equals('/')) &&
-            (rootChar.equals('*') || rootChar.equals('/'))
-        )
+        else if ((currentChar.equals('*') || currentChar.equals('/')) && (rootChar.equals('*') || rootChar.equals('/')))
         {
             priority = false
         }
-        else if ((currentChar.equals('+') || currentChar.equals('-')) &&
-            (rootChar.equals('*') || rootChar.equals('/'))
-        )
+        else if ((currentChar.equals('+') || currentChar.equals('-')) && (rootChar.equals('*') || rootChar.equals('/')))
         {
             priority = false
         }
-        else if ((currentChar.equals('+') || currentChar.equals('-')) &&
-            (rootChar.equals('+') || rootChar.equals('-'))
-        )
+        else if ((currentChar.equals('+') || currentChar.equals('-')) && (rootChar.equals('+') || rootChar.equals('-')))
         {
             priority = false
         }
-        else if (!rootChar.equals('*') ||
-            !rootChar.equals('/') ||
-            !rootChar.equals('+') ||
-            !rootChar.equals('-')
-        )
+        else if (!rootChar.equals('*') || !rootChar.equals('/') || !rootChar.equals('+') || !rootChar.equals('-'))
         {
             return false
         }
