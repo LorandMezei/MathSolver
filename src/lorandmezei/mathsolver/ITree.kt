@@ -1,6 +1,6 @@
 package lorandmezei.mathsolver
 
 interface ITree {
-    // Traverse the tree.
+    // Traverse.
     fun traverse(visitor : IVisitor)
 }
