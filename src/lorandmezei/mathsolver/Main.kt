@@ -2,9 +2,7 @@ package lorandmezei.mathsolver
 
 import java.util.ArrayList
 
-class Main
-{
-    fun main(args: Array<String?>?)
+    fun main()
     {
         /**
          *
@@ -95,4 +93,3 @@ class Main
 
         ///////////////////// (5+3)-4 /////////////////////////////////////
     }
-}
