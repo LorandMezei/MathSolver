@@ -1,4 +1,7 @@
 package lorandmezei.mathsolver
 
-class PrefixPrint {
+class PrefixPrint : IVisitor {
+    override fun visit(node: INode): Any {
+        TODO("Not yet implemented")
+    }
 }

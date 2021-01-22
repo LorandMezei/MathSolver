@@ -1,4 +1,6 @@
 package lorandmezei.mathsolver
 
-class Main {
+class Main
+{
+
 }
