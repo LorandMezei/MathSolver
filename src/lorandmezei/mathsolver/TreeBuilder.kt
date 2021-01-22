@@ -54,7 +54,7 @@ class TreeBuilder
     }
 
     /**
-     * Given a character array, find the index of the root
+     * Given a character array, find the index of the root.
      * The character that will be the root is the last character in the array with the lowest priority.
      *
      * @param expression
@@ -114,7 +114,7 @@ class TreeBuilder
         {
             priority = false
         }
-        else if (!rootChar.equals('*') || !rootChar.equals('/') || !rootChar.equals('+') || !rootChar.equals('-'))
+        else
         {
             return false
         }
