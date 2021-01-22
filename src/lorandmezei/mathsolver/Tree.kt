@@ -1,9 +1,9 @@
 package lorandmezei.mathsolver
 
-class Tree : ITree {
-    lateinit var rootNode : INode
+class Tree {
+    lateinit var rootNode : Node
 
-    override fun traverse(visitor : IVisitor) : Any? {
+    fun traverse(visitor : IVisitor) : Any? {
         return rootNode.accept(visitor)
     }
 }

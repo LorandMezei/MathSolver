@@ -1,8 +1,8 @@
 package lorandmezei.mathsolver
 
-class PrefixPrint : IVisitor
+class PrefixPrintVisitor : IVisitor
 {
-    override fun visit(node: INode): Any?
+    override fun visit(node: Node): Any?
     {
         // Base case I think.
         if (node == null)

@@ -2,5 +2,5 @@ package lorandmezei.mathsolver
 
 interface IVisitor {
     // Visit.
-    fun visit(node : INode) : Any?
+    fun visit(node : Node) : Any?
 }

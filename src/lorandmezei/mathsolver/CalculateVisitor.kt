@@ -1,9 +1,9 @@
 package lorandmezei.mathsolver
 
-class Calculator : IVisitor
+class CalculateVisitor : IVisitor
 {
     // Recursive.
-    override fun visit(node : INode) : Any
+    override fun visit(node : Node) : Any
     {
         // Base case if the node is a leaf node (operand).
         if (node.leftNode == null && node.rightNode == null)

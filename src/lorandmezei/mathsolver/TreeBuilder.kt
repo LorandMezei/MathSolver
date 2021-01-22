@@ -25,13 +25,13 @@ class TreeBuilder
         rootNode.rightNode = buildTree(expression.copyOfRange(rootIndex + 1, expression.size))
     }
 
-    fun buildTree(expression: Array<Any>): INode
+    fun buildTree(expression: Array<Any>): Node
     {
         // Base case: If the length of the expression array is 1, that means that it is a leaf node,
         // and it stores only an integer.
         if (expression.size == 1)
         {
-            var currentNode: INode = Node()
+            var currentNode: Node = Node()
             currentNode.content = expression[0]
 
             return currentNode
@@ -39,7 +39,7 @@ class TreeBuilder
 
         var rootIndex = findRootIndex(expression)
 
-        var currentNode: INode = Node()
+        var currentNode: Node = Node()
         currentNode.content = expression[rootIndex]
 
         // Call the recursive build tree method on the left child of the tree's root, with the subexpression passed
