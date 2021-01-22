@@ -2,5 +2,5 @@ package lorandmezei.mathsolver
 
 interface ITree {
     // Traverse.
-    fun traverse(visitor : IVisitor) : Any
+    fun traverse(visitor : IVisitor) : Any?
 }

@@ -1,14 +1,12 @@
 package lorandmezei.mathsolver
 
-class Node(var c : Any,
-           var lN : INode,
-           var rN : INode) : INode
+class Node() : INode
 {
-    override var content : Any = c
-    override var leftNode : INode = lN
-    override var rightNode : INode = rN
+    override lateinit var content : Any
+    override lateinit var leftNode : INode
+    override lateinit var rightNode : INode
 
-    override fun accept(visitor : IVisitor) : Any
+    override fun accept(visitor : IVisitor) : Any?
     {
         return visitor.visit(this)
     }
