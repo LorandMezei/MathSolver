@@ -2,7 +2,7 @@ package lorandmezei.mathsolver
 
 class TreeBuilder
 {
-    fun startBuildTree(expression: Array<Any>, tree: Tree)
+    fun startBuildTree(expression: Array<Char>, tree: Tree)
     {
         // Find the index in the expression array that is the root value of the current expression.
         var rootIndex = findRootIndex(expression)
@@ -25,7 +25,7 @@ class TreeBuilder
         rootNode.rightNode = buildTree(expression.copyOfRange(rootIndex + 1, expression.size))
     }
 
-    fun buildTree(expression: Array<Any>): Node
+    fun buildTree(expression: Array<Char>): Node
     {
         // Base case: If the length of the expression array is 1, that means that it is a leaf node,
         // and it stores only an integer.
@@ -39,7 +39,7 @@ class TreeBuilder
 
         var rootIndex = findRootIndex(expression)
 
-        var currentNode: Node = Node()
+        var currentNode = Node()
         currentNode.content = expression[rootIndex]
 
         // Call the recursive build tree method on the left child of the tree's root, with the subexpression passed
@@ -60,7 +60,7 @@ class TreeBuilder
      * @param expression
      * @return index of the root in character array
      */
-    fun findRootIndex(expression: Array<Any>): Int
+    fun findRootIndex(expression: Array<Char>): Int
     {
         var rootIndex = 0
 
@@ -69,11 +69,11 @@ class TreeBuilder
             // If the character is an operator.
             if (expression[i] == '*' || expression[i] == '/' || expression[i] == '+' || expression[i] == '-')
             {
-                val rootChar: Any = expression[rootIndex]
-                val currentChar: Any = expression[i]
+                val rootChar: Char = expression[rootIndex]
+                val currentChar: Char = expression[i]
 
-                // If current char being looked at has same or less priority than current root char,
-                // set root_index to index of current_char.
+                // If current character being looked at has same or less priority than current root character,
+                // set rootIndex to index of current character.
                 if (!checkPriority(rootChar, currentChar))
                 {
                     rootIndex = i
@@ -93,7 +93,7 @@ class TreeBuilder
      * @param currentChar
      * @return
      */
-    fun checkPriority(rootChar: Any, currentChar: Any): Boolean
+    fun checkPriority(rootChar: Char, currentChar: Char): Boolean
     {
         var priority = false
 

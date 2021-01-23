@@ -1,8 +1,8 @@
 package lorandmezei.mathsolver
 
-class Node(content: Any = 0)
+class Node(content: Char = '0')
 {
-    var content: Any = content
+    var content: Char = content
     var leftNode: Node? = null
     var rightNode : Node? = null
 
