@@ -11,13 +11,14 @@ fun main()
      *
      */
 
-    val expression1: Array<Char> = arrayOf('5', '+', '3', '-', '4')
+    val input: String = "5+3-4"
+    val expression = input.toCharArray()
 
     val tb = TreeBuilder()
 
     val t = Tree()
 
-    tb.startBuildTree(expression1, t)
+    tb.startBuildTree(expression, t)
 
     var v: IVisitor = CalculateVisitor()
 
