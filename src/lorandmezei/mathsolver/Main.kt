@@ -11,12 +11,12 @@ fun main()
      *
      */
 
-    val input: String = "5+3-4"
-    val expression = input.toCharArray()
+    var input: String = "5+3*4"
+    var expression: Array<Char> = input.toCharArray().toTypedArray()
 
-    val tb = TreeBuilder()
+    var tb = TreeBuilder()
 
-    val t = Tree()
+    var t = Tree()
 
     tb.startBuildTree(expression, t)
 
