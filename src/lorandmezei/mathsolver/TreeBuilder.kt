@@ -2,7 +2,7 @@ package lorandmezei.mathsolver
 
 class TreeBuilder
 {
-    fun startBuildTree(expression: Array<Char>, tree: Tree)
+    fun startBuildTree(expression: CharArray, tree: Tree)
     {
         // Find the index in the expression array that is the root value of the current expression.
         var rootIndex = findRootIndex(expression)
@@ -25,21 +25,25 @@ class TreeBuilder
         rootNode.rightNode = buildTree(expression.copyOfRange(rootIndex + 1, expression.size))
     }
 
-    fun buildTree(expression: Array<Char>): Node
+    fun buildTree(expression: CharArray): Node
     {
         // Base case: If the length of the expression array is 1, that means that it is a leaf node,
         // and it stores only an integer.
         if (expression.size == 1)
         {
-            var currentNode: Node = Node()
+            var currentNode = Node()
             currentNode.content = expression[0]
 
             return currentNode
         }
 
+        // Find the index in the expression array that is the root value of the current expression.
         var rootIndex = findRootIndex(expression)
 
+        // Create a new node that will be the current node.
         var currentNode = Node()
+
+        // Set the content of the current node to be the root value found in the expression array.
         currentNode.content = expression[rootIndex]
 
         // Call the recursive build tree method on the left child of the tree's root, with the subexpression passed
@@ -60,7 +64,7 @@ class TreeBuilder
      * @param expression
      * @return index of the root in character array
      */
-    fun findRootIndex(expression: Array<Char>): Int
+    fun findRootIndex(expression: CharArray): Int
     {
         var rootIndex = 0
 

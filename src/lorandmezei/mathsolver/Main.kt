@@ -11,20 +11,22 @@ fun main()
      *
      */
 
-    var input: String = "5+3*4"
-    var expression: Array<Char> = input.toCharArray().toTypedArray()
+    var input: String = readLine()!!
+    var expression: CharArray = input.toCharArray()
+
+
+    expression.forEach{ index->println(index) }
+    println(expression.size)
 
     var tb = TreeBuilder()
-
     var t = Tree()
-
+    // Build the expression tree. Pass the expression (a character array), and the Tree object
+    // to create it in.
     tb.startBuildTree(expression, t)
 
     var v: IVisitor = CalculateVisitor()
-
     println("Calculated value: " + t.traverse(v))
 
     v = PrefixPrintVisitor()
-
     v.visit(t.rootNode)
 }
