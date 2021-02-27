@@ -11,12 +11,15 @@ fun main()
      *
      */
 
-    var input: String = readLine()!!
+    var input: String = "5+5-3*2/2"
+    //var input: String = readLine()!!
     var expression: CharArray = input.toCharArray()
 
 
+    // Debugging --------------------------------
     expression.forEach{ index->println(index) }
-    println(expression.size)
+    println("expression.size" + expression.size)
+    //-------------------------------------------
 
     var tb = TreeBuilder()
     var t = Tree()

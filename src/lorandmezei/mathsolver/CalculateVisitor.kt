@@ -1,5 +1,7 @@
 package lorandmezei.mathsolver
 
+import kotlin.math.pow
+
 class CalculateVisitor : IVisitor
 {
     // Recursive.
@@ -25,6 +27,7 @@ class CalculateVisitor : IVisitor
             // Switch. Apply the appropriate operation to the nodes' contents.
             when (operator)
             {
+                '^' -> answer = x.pow(y)
                 '*' -> answer = x * y
                 '/' -> answer = x / y
                 '+' -> answer = x + y

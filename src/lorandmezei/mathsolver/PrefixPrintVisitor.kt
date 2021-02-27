@@ -11,10 +11,11 @@ class PrefixPrintVisitor : IVisitor
         }
 
         // If the current node is an operator.
-        if (node.leftNode != null && node.leftNode != null)
+        if (node.leftNode != null && node.rightNode != null)
         {
             when(node.content)
             {
+                '^' -> println("exp ")
                 '*' -> println("mul ")
                 '/' -> println("div ")
                 '+' -> println("add ")
