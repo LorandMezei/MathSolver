@@ -1,6 +1,10 @@
 // Sources: http://www.openbookproject.net/books/pythonds/Trees/ParseTree.html
+//          https://www.codinghelmet.com/exercises/expression-evaluator
 
 package lorandmezei.mathsolver
+
+import org.junit.Test
+import kotlin.test.*
 
 class TreeBuilder
 {
@@ -39,13 +43,13 @@ class TreeBuilder
             return currentNode
         }
 
+        if (expression.size == 0)
+        {
+            println("empty expression")
+        }
+
         // Find the index in the expression array that is the root value of the current expression.
         var rootIndex = findRootIndex(expression)
-
-        // Debugging ----------------------------------------------
-        println("expression size: " + expression.size)
-        println("root index: " + rootIndex)
-        //---------------------------------------------------------
 
         // Create a new node that will be the current node.
         var currentNode = Node()
@@ -73,39 +77,78 @@ class TreeBuilder
      */
     fun findRootIndex(expression: CharArray): Int
     {
-        var operators = charArrayOf('*', '/', '^', '+', '-')
+        // If expression character array is empty, return -1.
+        if (expression.isEmpty())
+            return -1
 
+        // Operators that a character can be.
+        var operators = charArrayOf('^', '*', '/', '+', '-')
+
+        // Set the initial root index to 0.
         var rootIndex = 0
 
-        for (i in expression.indices)
+        // Iterate through each character in the expression.
+        for (currentIndex in expression.indices)
         {
-            // If the character is an operator.
-            if (operators.contains(expression[i]))
+            // If the current character is an operator and the root character is an operator.
+            if (operators.contains(expression[currentIndex]) && operators.contains(expression[rootIndex]))
             {
+                val currentChar: Char = expression[currentIndex]
                 val rootChar: Char = expression[rootIndex]
-                val currentChar: Char = expression[i]
 
-                // If current character being looked at has same or less priority than current root character,
-                // set rootIndex to index of current character.
-                if (checkPriority(currentChar, rootChar))
+                // If current character (operator) being looked at does NOT HAVE priority over root character (operator):
+                if (!checkOperatorPriority(currentChar, rootChar))
                 {
-                    rootIndex = i
+                    // set rootIndex to index of current character.
+                    rootIndex = currentIndex
                 }
             }
+            // If the current character is an operator and the root character is an operand.
+            else if (operators.contains(expression[currentIndex]) && !operators.contains(expression[rootIndex]))
+            {
+                val currentChar: Char = expression[currentIndex]
+                val rootChar: Char = expression[rootIndex]
 
-            // If the character is a left parenthesis '('.
+                // If current character (operator) being looked at HAS priority over root character (operand):
+                if (checkOperatorPriority(currentChar, rootChar))
+                {
+                    // set rootIndex to index of current character.
+                    rootIndex = currentIndex
+                }
+            }
+            // If the current character is an operand and the root character is an operand.
+            else if (!operators.contains(expression[currentIndex]) && !operators.contains(expression[rootIndex]))
+            {
+                val currentChar: Char = expression[currentIndex]
+                val rootChar: Char = expression[rootIndex]
 
-            // If the character is a right parenthesis ')'.
+                // If current character (operand) being looked at does not have priority over root character (operand):
+                if (!checkOperatorPriority(currentChar, rootChar))
+                {
+                    // set rootIndex to index of current character.
+                    rootIndex = currentIndex
+                }
+            }
+            // If the current character is an operand and the root character is an operator.
+            else if (!operators.contains(expression[currentIndex]) && operators.contains(expression[rootIndex]))
+            {
+                val currentChar: Char = expression[currentIndex]
+                val rootChar: Char = expression[rootIndex]
 
-            // If the character is a space ' '.
+                // If current character (operand) being looked at does HAS priority over root character (operator):
+                if (checkOperatorPriority(currentChar, rootChar))
+                {
+                    // set rootIndex to index of current character.
+                    rootIndex = currentIndex
+                }
+            }
         }
 
-        println("root index: " + rootIndex)
         return rootIndex
     }
 
     /**
-     * If current char is greater priority than the root char, return true;
+     * If current char (operator) is greater priority than the root char (operator), return true;
      *
      * If current char is less or same priority than the root char, return false;
      *
@@ -113,42 +156,45 @@ class TreeBuilder
      * @param currentChar
      * @return
      */
-    fun checkPriority(currentChar: Char, rootChar: Char): Boolean
+    fun checkOperatorPriority(currentChar: Char, rootChar: Char): Boolean
     {
+        //--------------------------------------------------------------------------------
         // PEMDAS priority.
-        var priority0 = charArrayOf('^') // highest priority
-        var priority1 = charArrayOf('*', '/')
-        var priority2 = charArrayOf('+', '-') // lowest priority
+        var priority3 = charArrayOf('^') // highest priority
+        var priority2 = charArrayOf('*', '/')
+        var priority1 = charArrayOf('+', '-') // lowest priority
+        //--------------------------------------------------------------------------------
 
         //--------------------------------------------------------------------------------
         // Determine the priority level of the current char.
         var currentCharPriority: Int = -1;
 
-        if (priority0.contains(currentChar))
-            currentCharPriority = 0
-
-        else if (priority1.contains(currentChar))
+        if (priority1.contains(currentChar))
             currentCharPriority = 1
 
         else if (priority2.contains(currentChar))
             currentCharPriority = 2
+
+        else if (priority3.contains(currentChar))
+            currentCharPriority = 3
         //--------------------------------------------------------------------------------
 
         //--------------------------------------------------------------------------------
         // Determine the priority level of the root char.
         var rootCharPriority: Int = -1;
 
-        if (priority0.contains(rootChar))
-            rootCharPriority = 0
-
-        else if (priority1.contains(rootChar))
+        if (priority1.contains(rootChar))
             rootCharPriority = 1
 
         else if (priority2.contains(rootChar))
             rootCharPriority = 2
+
+        else if (priority3.contains(rootChar))
+            rootCharPriority = 3
         //--------------------------------------------------------------------------------
 
         //--------------------------------------------------------------------------------
+        // Determine if current char has priority over root char.
         var hasPriority = false
 
         // Current char has higher priority than root char.
@@ -159,11 +205,135 @@ class TreeBuilder
         else if (currentCharPriority < rootCharPriority)
             hasPriority = false;
 
-        // Current char has same priority as root char.
-        else
+        // Current char has same priority than root char.
+        else if (currentCharPriority == rootCharPriority)
             hasPriority = false;
         //--------------------------------------------------------------------------------
-        
+
         return hasPriority
     }
+
+    //#####################################################################
+    @Test
+    fun findRootIndexTestExpressionEmpty()
+    {
+        // Empty expression.
+        assertEquals(-1, findRootIndex(charArrayOf()))
+    }
+    @Test
+    fun findRootIndexTestExpressionIncreasingPriority()
+    {
+        // 1^2*3/4+5-6
+        // Initial expression.
+        assertEquals(9, findRootIndex(charArrayOf('1','^','2','*','3','/','4','+','5','-','6')))
+        //                                                                                     #
+
+        // Going left of root char (#).
+        assertEquals(7, findRootIndex(charArrayOf('1','^','2','*','3','/','4','+','5')))
+        //                                                                             #
+        assertEquals(5, findRootIndex(charArrayOf('1','^','2','*','3','/','4')))
+        //                                                                     #
+        assertEquals(3, findRootIndex(charArrayOf('1','^','2','*','3')))
+        //                                                             #
+        assertEquals(1, findRootIndex(charArrayOf('1','^','2')))
+        //                                                     #
+        assertEquals(0, findRootIndex(charArrayOf('1')))
+        //                                                 #
+
+        // Going right of root char.
+        assertEquals(0, findRootIndex(charArrayOf('6')))
+        //                                                 #
+    }
+    @Test
+    fun findRootIndexTestExpressionDecreasingPriority()
+    {
+        // 1-2+3/4*5^6
+        // Initial expression.
+        assertEquals(3, findRootIndex(charArrayOf('1','-','2','+','3','/','4','*','5','^','6')))
+        //                                                             #
+
+        // Going left of root char (#).
+        assertEquals(1, findRootIndex(charArrayOf('1','-','2')))
+        //                                                     #
+        assertEquals(0, findRootIndex(charArrayOf('1')))
+        //                                                 #
+
+        // Going right of root char.
+        assertEquals(3, findRootIndex(charArrayOf('3','/','4','*','5','^','6')))
+        //                                                             #
+        assertEquals(1, findRootIndex(charArrayOf('5','^','6')))
+        //                                                     #
+        assertEquals(0, findRootIndex(charArrayOf('6')))
+        //                                                 #
+    }
+    //#####################################################################
+
+    //#####################################################################
+    @Test
+    fun checkOperatorPriorityCurrentCharDigit()
+    {
+        // Test current char is exponent.
+        assertFalse(checkOperatorPriority('9', '^'))
+        assertFalse(checkOperatorPriority('9', '*'))
+        assertFalse(checkOperatorPriority('9', '/'))
+        assertFalse(checkOperatorPriority('9', '+'))
+        assertFalse(checkOperatorPriority('9', '-'))
+        assertFalse(checkOperatorPriority('9', '9'))
+    }
+    @Test
+    fun checkOperatorPriorityCurrentCharExponent()
+    {
+        // Test current char is exponent.
+        assertFalse(checkOperatorPriority('^', '^'))
+        assertTrue(checkOperatorPriority('^', '*'))
+        assertTrue(checkOperatorPriority('^', '/'))
+        assertTrue(checkOperatorPriority('^', '+'))
+        assertTrue(checkOperatorPriority('^', '-'))
+        assertTrue(checkOperatorPriority('^', '9'))
+    }
+    @Test
+    fun checkOperatorPriorityCurrentCharMultiplication()
+    {
+        // Test current char is multiplication.
+        assertFalse(checkOperatorPriority('*', '^'))
+        assertFalse(checkOperatorPriority('*', '*'))
+        assertFalse(checkOperatorPriority('*', '/'))
+        assertTrue(checkOperatorPriority('*', '+'))
+        assertTrue(checkOperatorPriority('*', '-'))
+        assertTrue(checkOperatorPriority('*', '9'))
+    }
+    @Test
+    fun checkOperatorPriorityCurrentCharDivision()
+    {
+        // Test current char is multiplication.
+        assertFalse(checkOperatorPriority('/', '^'))
+        assertFalse(checkOperatorPriority('/', '*'))
+        assertFalse(checkOperatorPriority('/', '/'))
+        assertTrue(checkOperatorPriority('/', '+'))
+        assertTrue(checkOperatorPriority('/', '-'))
+        assertTrue(checkOperatorPriority('/', '9'))
+    }
+    @Test
+    fun checkOperatorPriorityCurrentCharAddition()
+    {
+        // Test current char is multiplication.
+        assertFalse(checkOperatorPriority('+', '^'))
+        assertFalse(checkOperatorPriority('+', '*'))
+        assertFalse(checkOperatorPriority('+', '/'))
+        assertFalse(checkOperatorPriority('+', '+'))
+        assertFalse(checkOperatorPriority('+', '-'))
+        assertTrue(checkOperatorPriority('+', '9'))
+    }
+    @Test
+    fun checkOperatorPriorityCurrentCharSubtraction()
+    {
+        // Test current char is multiplication.
+        assertFalse(checkOperatorPriority('-', '^'))
+        assertFalse(checkOperatorPriority('-', '*'))
+        assertFalse(checkOperatorPriority('-', '/'))
+        assertFalse(checkOperatorPriority('-', '+'))
+        assertFalse(checkOperatorPriority('-', '-'))
+        assertTrue(checkOperatorPriority('-', '9'))
+    }
+    //#####################################################################
 }

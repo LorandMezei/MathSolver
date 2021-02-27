@@ -11,25 +11,26 @@ fun main()
      *
      */
 
-    var input: String = "5+5-3*2/2"
-    //var input: String = readLine()!!
+    // Read the user input expression as a string, and turn it into a char array
+    // so that individual characters can be looked at one by one.
+    var input: String = "1^2*3/4+5-6"//readLine()!!
     var expression: CharArray = input.toCharArray()
 
 
     // Debugging --------------------------------
-    expression.forEach{ index->println(index) }
-    println("expression.size" + expression.size)
+    //expression.forEach{ index->println(index) }
+    //println("expression.size" + expression.size)
     //-------------------------------------------
 
-    var tb = TreeBuilder()
-    var t = Tree()
     // Build the expression tree. Pass the expression (a character array), and the Tree object
     // to create it in.
+    var tb = TreeBuilder()
+    var t = Tree()
     tb.startBuildTree(expression, t)
 
     var v: IVisitor = CalculateVisitor()
     println("Calculated value: " + t.traverse(v))
 
-    v = PrefixPrintVisitor()
-    v.visit(t.rootNode)
+    //v = PrefixPrintVisitor()
+    //v.visit(t.rootNode)
 }
