@@ -27,11 +27,11 @@ class CalculateVisitor : IVisitor
             // Switch. Apply the appropriate operation to the nodes' contents.
             when (operator)
             {
-                '^' -> answer = x.pow(y)
-                '*' -> answer = x * y
-                '/' -> answer = x / y
-                '+' -> answer = x + y
-                '-' -> answer = x - y
+                "^" -> answer = x.pow(y)
+                "*" -> answer = x * y
+                "/" -> answer = x / y
+                "+" -> answer = x + y
+                "-" -> answer = x - y
             }
 
             // Return the answer with the operation applied.

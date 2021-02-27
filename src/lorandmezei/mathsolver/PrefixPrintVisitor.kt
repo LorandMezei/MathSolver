@@ -15,11 +15,11 @@ class PrefixPrintVisitor : IVisitor
         {
             when(node.content)
             {
-                '^' -> println("exp ")
-                '*' -> println("mul ")
-                '/' -> println("div ")
-                '+' -> println("add ")
-                '-' -> println("sub ")
+                "^" -> println("exp ")
+                "*" -> println("mul ")
+                "/" -> println("div ")
+                "+" -> println("add ")
+                "-" -> println("sub ")
             }
 
             // Recursion.
