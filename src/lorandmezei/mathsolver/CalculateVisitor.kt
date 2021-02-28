@@ -11,7 +11,7 @@ class CalculateVisitor : IVisitor
         if (node.leftNode == null && node.rightNode == null)
         {
             // Return the value of the node's content.
-            return node.content.toString().toDouble()
+            return node.content.toDouble()
         }
 
         else
@@ -21,7 +21,7 @@ class CalculateVisitor : IVisitor
             val x = node.leftNode!!.accept(this).toString().toDouble()
             val y = node.rightNode!!.accept(this).toString().toDouble()
 
-            // Choose correct operator based on character.
+            // Choose correct operator based on string's characters.
             val operator = node.content
 
             // Switch. Apply the appropriate operation to the nodes' contents.
