@@ -6,9 +6,9 @@ import kotlin.test.*
 // Sources: http://www.openbookproject.net/books/pythonds/Trees/ParseTree.html
 //          https://www.codinghelmet.com/exercises/expression-evaluator
 
-class TreeBuilder
+class ExpressionTreeBuilder
 {
-    fun startBuildTree(expression: Array<String>, tree: Tree)
+    fun startBuildTree(expression: Array<String>, tree: ExpressionTree)
     {
         // Find the index in the expression array that is the root value of the current expression.
         var rootIndex = findRootIndex(expression)

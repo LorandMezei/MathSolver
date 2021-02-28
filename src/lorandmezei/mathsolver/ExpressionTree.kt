@@ -1,6 +1,6 @@
 package lorandmezei.mathsolver
 
-class Tree {
+class ExpressionTree {
     lateinit var rootNode : Node
 
     fun traverse(visitor : IVisitor) : Any? {

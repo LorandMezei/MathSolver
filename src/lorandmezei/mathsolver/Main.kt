@@ -7,31 +7,27 @@ import kotlin.test.assertEquals
 
 fun main()
 {
-    /**
-     *
-     * // build a tree for the following expressions
-     * // 5 + 3 - 4; 5*4 + 3; 5 + 4 * 3; 5 * 6 / 10;
-     *
-     * // more complicated ones: 3 * 2 - 4 * 5 / 3 ;    10 + 30 / 5 * 6 - 19 * 2 / 4
-     *
-     */
-
-    // Create expression from user input---------------------------------------
-    var input: String = "1^2*3/4+5-6" // readLine()!!
+    var input: String = "2*4" // readLine()!!
 
     var expression: Array<String> = parseInput(input)
-    //-------------------------------------------------------------------------
 
-    // Build the expression tree. Pass the expression (a character array), and the Tree object
-    // to create it in.
-    var tb = TreeBuilder()
-    var t = Tree()
-    tb.startBuildTree(expression, t)
+    var expressionTree = createExpressionTree(expression)
 
     var v: IVisitor = CalculateVisitor()
-    println("Calculated value: " + t.traverse(v))
+    println("Calculated value: " + expressionTree.traverse(v))
 }
 
+fun createExpressionTree(expression: Array<String>): ExpressionTree
+{
+    // Build the expression tree. Pass the expression and the Tree object to create it in.
+    var tb = ExpressionTreeBuilder()
+    var t = ExpressionTree()
+    tb.startBuildTree(expression, t)
+
+    return t
+}
+
+// Turn a String into an Array<String>
 fun parseInput(input: String): Array<String>
 {
     var chars: CharArray = input.toCharArray()
