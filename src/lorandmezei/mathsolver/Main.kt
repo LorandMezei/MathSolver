@@ -1,5 +1,8 @@
 package lorandmezei.mathsolver
 
+import org.junit.Test
+import kotlin.test.assertEquals
+
 // Sources: https://www.techiedelight.com/add-new-element-array-kotlin/
 
 fun main()
@@ -15,17 +18,8 @@ fun main()
 
     // Create expression from user input---------------------------------------
     var input: String = "1^2*3/4+5-6" // readLine()!!
-    var chars: CharArray = input.toCharArray()
 
-    var inputArray: Array<String> = arrayOf()
-    var list: MutableList<String> = inputArray.toMutableList()
-
-    for (i in chars)
-    {
-        list.add(i.toString())
-    }
-
-    var expression: Array<String> = list.toTypedArray() //arrayOf("1","^","2","*","3","/","4","+","5","-","6")
+    var expression: Array<String> = parseInput(input)
     //-------------------------------------------------------------------------
 
     // Build the expression tree. Pass the expression (a character array), and the Tree object
@@ -37,3 +31,30 @@ fun main()
     var v: IVisitor = CalculateVisitor()
     println("Calculated value: " + t.traverse(v))
 }
+
+fun parseInput(input: String): Array<String>
+{
+    var chars: CharArray = input.toCharArray()
+
+    var inputArray: Array<String> = arrayOf()
+    var list: MutableList<String> = inputArray.toMutableList()
+
+    // Take out multiple digits.
+    for (i in chars)
+    {
+        list.add(i.toString())
+    }
+
+    var expression: Array<String> = list.toTypedArray()
+
+    return expression
+}
+
+//#####################################################################
+@Test
+fun parseInputSingleDigits()
+{
+    // Single digits expression.
+    assertEquals(arrayOf("1","^","2","*","3","/","4","+","5","-","6"), parseInput("1^2*3/4+5-6"))
+}
+//#####################################################################

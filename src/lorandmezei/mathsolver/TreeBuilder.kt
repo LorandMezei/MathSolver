@@ -1,10 +1,10 @@
-// Sources: http://www.openbookproject.net/books/pythonds/Trees/ParseTree.html
-//          https://www.codinghelmet.com/exercises/expression-evaluator
-
 package lorandmezei.mathsolver
 
 import org.junit.Test
 import kotlin.test.*
+
+// Sources: http://www.openbookproject.net/books/pythonds/Trees/ParseTree.html
+//          https://www.codinghelmet.com/exercises/expression-evaluator
 
 class TreeBuilder
 {
