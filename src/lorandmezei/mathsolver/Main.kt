@@ -5,13 +5,13 @@ import kotlin.test.assertEquals
 
 fun main()
 {
-    val input = "10*10" // readLine()!!
+    val input = readLine()!!
 
     val expression: Array<String> = parseInput(input)
 
-    var expressionTree = createExpressionTree(expression)
+    val expressionTree = createExpressionTree(expression)
 
-    var v: IVisitor = CalculateVisitor()
+    val v: IVisitor = CalculateVisitor()
     println("Calculated value: " + expressionTree.traverse(v))
 }
 
@@ -39,17 +39,12 @@ fun parseInput(input: String): Array<String>
     var index2 = 0
     while (index1 < chars.size)
     {
-        //println("index1: " + index1)
-        //println("index2: " + index2)
-
         // String that will take on the value of a operator or digit(s).
         var stringToAdd = ""
 
         // If the current character in array is NOT a digit (is an operator):
         if (!chars[index1].isDigit())
         {
-            println("chars[index1]: " + chars[index1])
-
             // Make that operator to a string.
             stringToAdd += chars[index1]
             index1++
@@ -63,13 +58,11 @@ fun parseInput(input: String): Array<String>
             // While there are adjacent digits:
             while(chars[index2].isDigit() && index2 < chars.size)
             {
-                println("chars[index2]: " + chars[index2])
-
                 // Concatenate the digits together into a single string.
                 stringToAdd += chars[index2]
                 index2++
 
-                // Make sure index2 doesnt read from outside of array bounds.
+                // Make sure index2 doesn't read from outside of array bounds.
                 if (index2 >= chars.size)
                 {
                     break
