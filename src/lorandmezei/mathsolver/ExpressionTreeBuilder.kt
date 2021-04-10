@@ -5,8 +5,11 @@ import kotlin.test.*
 
 class ExpressionTreeBuilder
 {
-    fun startBuildTree(expression: Array<String>, tree: ExpressionTree)
+    fun startBuildTree(expression: Array<String>): ExpressionTree
     {
+        // Create an empty expression tree.
+        val tree = ExpressionTree()
+
         // Find the index in the expression array that is the root value of the current expression.
         var rootIndex = findRootIndex(expression)
 
@@ -26,6 +29,9 @@ class ExpressionTreeBuilder
         // Call the recursive build tree method on the right child of the tree's root, with the subexpression passed
         // (this subexpression is every value in the expression array that is to the right of the root value).
         rootNode.rightNode = buildTree(expression.copyOfRange(rootIndex + 1, expression.size))
+
+        // Return the expression tree.
+        return tree
     }
 
     fun buildTree(expression: Array<String>): Node
@@ -332,7 +338,6 @@ class ExpressionTreeBuilder
         assertFalse(checkOperatorPriority("-", "-"))
         assertTrue(checkOperatorPriority("-", "9"))
     }
-    //#####################################################################
 }
 
 // Sources: http://www.openbookproject.net/books/pythonds/Trees/ParseTree.html
