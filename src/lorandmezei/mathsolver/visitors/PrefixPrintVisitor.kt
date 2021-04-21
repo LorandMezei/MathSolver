@@ -1,4 +1,6 @@
-package lorandmezei.mathsolver
+package lorandmezei.mathsolver.visitors
+
+import lorandmezei.mathsolver.dataStructures.Node
 
 class PrefixPrintVisitor : IVisitor
 {

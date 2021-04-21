@@ -1,5 +1,8 @@
 package lorandmezei.mathsolver
 
+import lorandmezei.mathsolver.visitors.CalculateVisitor
+import lorandmezei.mathsolver.visitors.IVisitor
+
 fun main()
 {
     println("Enter expression")
@@ -15,4 +18,5 @@ fun main()
     println("Calculated value: " + expressionTree.traverse(v))
 }
 
-// Sources: https://www.techiedelight.com/add-new-element-array-kotlin/
+// Sources:
+// https://www.techiedelight.com/add-new-element-array-kotlin/

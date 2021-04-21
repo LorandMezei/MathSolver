@@ -1,7 +1,7 @@
 package lorandmezei.mathsolver
 
-import org.junit.Test
-import kotlin.test.*
+import lorandmezei.mathsolver.dataStructures.ExpressionTree
+import lorandmezei.mathsolver.dataStructures.Node
 
 class ExpressionTreeBuilder
 {
@@ -84,62 +84,53 @@ class ExpressionTreeBuilder
         if (expression.isEmpty())
             return -1
 
-        // Operators that a string's characters can be.
-        var operators = arrayOf("^", "*", "/", "+", "-")
-
         // Set the initial root index to 0.
         var rootIndex = 0
 
         // Iterate through each string in the expression.
         for (currentIndex in expression.indices)
         {
+            val currentString: String = expression[currentIndex]
+            val rootString: String = expression[rootIndex]
+
             // If the current string is an operator and the root string is an operator.
-            if (operators.contains(expression[currentIndex]) && operators.contains(expression[rootIndex]))
+            if (isOperator(currentString) && isOperator(rootString))
             {
-                val currentString: String = expression[currentIndex]
-                val rootString: String = expression[rootIndex]
-
                 // If current string (operator) being looked at does NOT HAVE priority over root string (operator):
-                if (!checkOperatorPriority(currentString, rootString))
+                if (!hasPriority(currentString, rootString))
                 {
                     // set rootIndex to index of current string.
                     rootIndex = currentIndex
                 }
             }
+
             // If the current string is an operator and the root string is an operand.
-            else if (operators.contains(expression[currentIndex]) && !operators.contains(expression[rootIndex]))
+            else if (isOperator(currentString) && !isOperator(rootString))
             {
-                val currentString: String = expression[currentIndex]
-                val rootString: String = expression[rootIndex]
-
                 // If current string (operator) being looked at HAS priority over root string (operand):
-                if (checkOperatorPriority(currentString, rootString))
+                if (hasPriority(currentString, rootString))
                 {
                     // set rootIndex to index of current string.
                     rootIndex = currentIndex
                 }
             }
+
             // If the current string is an operand and the root string is an operand.
-            else if (!operators.contains(expression[currentIndex]) && !operators.contains(expression[rootIndex]))
+            else if (!isOperator(currentString) && !isOperator(rootString))
             {
-                val currentString: String = expression[currentIndex]
-                val rootString: String = expression[rootIndex]
-
                 // If current string (operand) being looked at does not have priority over root string (operand):
-                if (!checkOperatorPriority(currentString, rootString))
+                if (!hasPriority(currentString, rootString))
                 {
                     // set rootIndex to index of current string.
                     rootIndex = currentIndex
                 }
             }
-            // If the current string is an operand and the root string is an operator.
-            else if (!operators.contains(expression[currentIndex]) && operators.contains(expression[rootIndex]))
-            {
-                val currentString: String = expression[currentIndex]
-                val rootString: String = expression[rootIndex]
 
+            // If the current string is an operand and the root string is an operator.
+            else if (!isOperator(currentString) && isOperator(rootString))
+            {
                 // If current string (operand) being looked at does HAS priority over root string (operator):
-                if (checkOperatorPriority(currentString, rootString))
+                if (hasPriority(currentString, rootString))
                 {
                     // set rootIndex to index of current string.
                     rootIndex = currentIndex
@@ -147,28 +138,31 @@ class ExpressionTreeBuilder
             }
         }
 
+        // Return root index.
         return rootIndex
     }
 
-    /**
-     * If current string (operator) is greater priority than the root string (operator), return true;
-     *
-     * If current string is less or same priority than the root string, return false;
-     *
-     * @param rootString
-     * @param currentString
-     * @return
+    /*
+        Checks whether a given string is an operator.
      */
-    fun checkOperatorPriority(currentString: String, rootString: String): Boolean
+    fun isOperator(currentString: String): Boolean
     {
-        //--------------------------------------------------------------------------------
-        // PEMDAS priority.
-        var priority3 = arrayOf("^") // highest priority
-        var priority2 = arrayOf("*", "/")
-        var priority1 = arrayOf("+", "-") // lowest priority
-        //--------------------------------------------------------------------------------
+        // Operators that a string's characters can be.
+        var operators = arrayOf("^", "*", "/", "+", "-")
 
-        //--------------------------------------------------------------------------------
+        return operators.contains(currentString)
+    }
+
+    /*
+        Returns the priority level of a String operator. Larger number means higher priority.
+     */
+    fun getPriority(currentString: String): Int
+    {
+        // PEMDAS priority.
+        var priority1 = arrayOf("+", "-") // lowest priority
+        var priority2 = arrayOf("*", "/")
+        var priority3 = arrayOf("^") // highest priority
+
         // Determine the priority level of the current string.
         var currentStringPriority: Int = -1;
 
@@ -180,165 +174,32 @@ class ExpressionTreeBuilder
 
         else if (priority3.contains(currentString))
             currentStringPriority = 3
-        //--------------------------------------------------------------------------------
 
-        //--------------------------------------------------------------------------------
+        return currentStringPriority
+    }
+
+    /**
+     * If current string (operator) is greater priority than the root string (operator), return true;
+     *
+     * If current string is less or same priority than the root string, return false;
+     *
+     * @param rootString
+     * @param currentString
+     * @return
+     */
+    fun hasPriority(currentString: String, rootString: String): Boolean
+    {
+        // Determine the priority level of the current string.
+        var currentStringPriority: Int = getPriority(currentString)
+
         // Determine the priority level of the root string.
-        var rootStringPriority: Int = -1;
+        var rootStringPriority: Int = getPriority(rootString)
 
-        if (priority1.contains(rootString))
-            rootStringPriority = 1
-
-        else if (priority2.contains(rootString))
-            rootStringPriority = 2
-
-        else if (priority3.contains(rootString))
-            rootStringPriority = 3
-        //--------------------------------------------------------------------------------
-
-        //--------------------------------------------------------------------------------
         // Determine if current string has priority over root string.
-        var hasPriority = false
-
-        // Current string has higher priority than root string.
-        if (currentStringPriority > rootStringPriority)
-            hasPriority = true;
-
-        // Current string has lower priority than root string.
-        else if (currentStringPriority < rootStringPriority)
-            hasPriority = false;
-
-        // Current string has same priority than root string.
-        else if (currentStringPriority == rootStringPriority)
-            hasPriority = false;
-        //--------------------------------------------------------------------------------
-
-        return hasPriority
-    }
-
-    //#####################################################################
-    @Test
-    fun findRootIndexTestExpressionEmpty()
-    {
-        // Empty expression.
-        assertEquals(-1, findRootIndex(arrayOf()))
-    }
-    @Test
-    fun findRootIndexTestExpressionSingleDigitIncreasingPriority()
-    {
-        // 1^2*3/4+5-6
-        // Initial expression.
-        assertEquals(9, findRootIndex(arrayOf("1","^","2","*","3","/","4","+","5","-","6")))
-        //                                                                                     #
-
-        // Going left of root string (#).
-        assertEquals(7, findRootIndex(arrayOf("1","^","2","*","3","/","4","+","5")))
-        //                                                                             #
-        assertEquals(5, findRootIndex(arrayOf("1","^","2","*","3","/","4")))
-        //                                                                     #
-        assertEquals(3, findRootIndex(arrayOf("1","^","2","*","3")))
-        //                                                             #
-        assertEquals(1, findRootIndex(arrayOf("1","^","2")))
-        //                                                     #
-        assertEquals(0, findRootIndex(arrayOf("1")))
-        //                                                 #
-
-        // Going right of root string.
-        assertEquals(0, findRootIndex(arrayOf("6")))
-        //                                                 #
-    }
-    @Test
-    fun findRootIndexTestExpressionSingleDigitDecreasingPriority()
-    {
-        // 1-2+3/4*5^6
-        // Initial expression.
-        assertEquals(3, findRootIndex(arrayOf("1","-","2","+","3","/","4","*","5","^","6")))
-        //                                                             #
-
-        // Going left of root string (#).
-        assertEquals(1, findRootIndex(arrayOf("1","-","2")))
-        //                                                     #
-        assertEquals(0, findRootIndex(arrayOf("1")))
-        //                                                 #
-
-        // Going right of root string.
-        assertEquals(3, findRootIndex(arrayOf("3","/","4","*","5","^","6")))
-        //                                                             #
-        assertEquals(1, findRootIndex(arrayOf("5","^","6")))
-        //                                                     #
-        assertEquals(0, findRootIndex(arrayOf("6")))
-        //                                                 #
-    }
-    //#####################################################################
-
-    //#####################################################################
-    @Test
-    fun checkOperatorPriorityCurrentStringDigit()
-    {
-        // Test current string is exponent.
-        assertFalse(checkOperatorPriority("9", "^"))
-        assertFalse(checkOperatorPriority("9", "*"))
-        assertFalse(checkOperatorPriority("9", "/"))
-        assertFalse(checkOperatorPriority("9", "+"))
-        assertFalse(checkOperatorPriority("9", "-"))
-        assertFalse(checkOperatorPriority("9", "9"))
-    }
-    @Test
-    fun checkOperatorPriorityCurrentStringExponent()
-    {
-        // Test current string is exponent.
-        assertFalse(checkOperatorPriority("^", "^"))
-        assertTrue(checkOperatorPriority("^", "*"))
-        assertTrue(checkOperatorPriority("^", "/"))
-        assertTrue(checkOperatorPriority("^", "+"))
-        assertTrue(checkOperatorPriority("^", "-"))
-        assertTrue(checkOperatorPriority("^", "9"))
-    }
-    @Test
-    fun checkOperatorPriorityCurrentStringMultiplication()
-    {
-        // Test current string is multiplication.
-        assertFalse(checkOperatorPriority("*", "^"))
-        assertFalse(checkOperatorPriority("*", "*"))
-        assertFalse(checkOperatorPriority("*", "/"))
-        assertTrue(checkOperatorPriority("*", "+"))
-        assertTrue(checkOperatorPriority("*", "-"))
-        assertTrue(checkOperatorPriority("*", "9"))
-    }
-    @Test
-    fun checkOperatorPriorityCurrentStringDivision()
-    {
-        // Test current string is multiplication.
-        assertFalse(checkOperatorPriority("/", "^"))
-        assertFalse(checkOperatorPriority("/", "*"))
-        assertFalse(checkOperatorPriority("/", "/"))
-        assertTrue(checkOperatorPriority("/", "+"))
-        assertTrue(checkOperatorPriority("/", "-"))
-        assertTrue(checkOperatorPriority("/", "9"))
-    }
-    @Test
-    fun checkOperatorPriorityCurrentStringAddition()
-    {
-        // Test current string is multiplication.
-        assertFalse(checkOperatorPriority("+", "^"))
-        assertFalse(checkOperatorPriority("+", "*"))
-        assertFalse(checkOperatorPriority("+", "/"))
-        assertFalse(checkOperatorPriority("+", "+"))
-        assertFalse(checkOperatorPriority("+", "-"))
-        assertTrue(checkOperatorPriority("+", "9"))
-    }
-    @Test
-    fun checkOperatorPriorityCurrentStringSubtraction()
-    {
-        // Test current string is multiplication.
-        assertFalse(checkOperatorPriority("-", "^"))
-        assertFalse(checkOperatorPriority("-", "*"))
-        assertFalse(checkOperatorPriority("-", "/"))
-        assertFalse(checkOperatorPriority("-", "+"))
-        assertFalse(checkOperatorPriority("-", "-"))
-        assertTrue(checkOperatorPriority("-", "9"))
+        return currentStringPriority > rootStringPriority
     }
 }
 
-// Sources: http://www.openbookproject.net/books/pythonds/Trees/ParseTree.html
-//          https://www.codinghelmet.com/exercises/expression-evaluator
+// Sources:
+// http://www.openbookproject.net/books/pythonds/Trees/ParseTree.html
+// https://www.codinghelmet.com/exercises/expression-evaluator

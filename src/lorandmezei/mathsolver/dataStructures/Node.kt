@@ -1,4 +1,6 @@
-package lorandmezei.mathsolver
+package lorandmezei.mathsolver.dataStructures
+
+import lorandmezei.mathsolver.visitors.IVisitor
 
 class Node(content: String = "0")
 {

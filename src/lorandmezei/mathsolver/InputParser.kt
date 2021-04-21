@@ -5,7 +5,7 @@ import kotlin.test.*
 
 class InputParser
 {
-    // Turn a String into an Array<String>
+    // Turn a String into an Array<String> with proper digits parsing.
     fun parseInput(input: String): Array<String>
     {
         val chars: CharArray = input.toCharArray()
@@ -60,21 +60,6 @@ class InputParser
         val expression: Array<String> = list.toTypedArray()
 
         return expression
-    }
-
-    @Test
-    fun parseInputSingleDigits()
-    {
-        // Single digits expression.
-        assertEquals(arrayOf("1","^","2","*","3","/","4","+","5","-","6"),
-                parseInput("1^2*3/4+5-6"))
-    }
-    @Test
-    fun parseInputMultipleDigits()
-    {
-        // Single digits expression.
-        assertEquals(arrayOf("1","^","22","*","333","/","4444","+","55555","-","666666"),
-                parseInput("1^22*333/4444+55555-666666"))
     }
 }
 

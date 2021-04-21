@@ -1,5 +1,6 @@
-package lorandmezei.mathsolver
+package lorandmezei.mathsolver.visitors
 
+import lorandmezei.mathsolver.dataStructures.Node
 import kotlin.math.pow
 
 class CalculateVisitor : IVisitor
