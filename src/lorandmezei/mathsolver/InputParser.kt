@@ -1,19 +1,26 @@
 package lorandmezei.mathsolver
 
-import org.junit.Test
-import kotlin.test.*
-
 class InputParser
 {
-    // Turn a String into an Array<String> with proper digits parsing.
-    fun parseInput(input: String): Array<String>
+    /**
+     * Turn a String into an Array<String> with proper digits parsing.
+     */
+    fun toStringArray(input: String): Array<String>
     {
-        val chars: CharArray = input.toCharArray()
+        // If the input String is empty, return an empty Array<String>.
+        if (input.isEmpty())
+        {
+            println("Empty expression --toStringArray")
+            return arrayOf()
+        }
 
+        // Turn the input String into a char array.
+        val chars: CharArray = input.toCharArray()
+        // Create an empty array of strings.
         val inputArray: Array<String> = arrayOf()
+        // Turn the empty array of strings into a list to be able to keep adding elements to it.
         val list: MutableList<String> = inputArray.toMutableList()
 
-        //----------------------------
         // Iterate through each character in array.
         var index1 = 0
         var index2 = 0
@@ -55,11 +62,30 @@ class InputParser
             // Add the string to the list.
             list.add(stringToAdd)
         }
-        //----------------------------
 
+        // Turn the list back into an array.
         val expression: Array<String> = list.toTypedArray()
 
+        // Return an array of strings.
         return expression
+    }
+
+    /**
+     * Check if the expression is a valid mathematical expression.
+     */
+    fun isValid(expression: Array<String>): Boolean
+    {
+        // Check if expression is empty.
+        if (expression.isEmpty())
+        {
+            print("Empty expression --isValid")
+            return false
+        }
+
+        // Assume the expression is valid by default.
+        var valid: Boolean = true
+
+        return valid
     }
 }
 

@@ -5,6 +5,9 @@ import lorandmezei.mathsolver.dataStructures.Node
 
 class ExpressionTreeBuilder
 {
+    /**
+     * This function should only take in a valid mathematical expression.
+     */
     fun startBuildTree(expression: Array<String>): ExpressionTree
     {
         // Create an empty expression tree.
@@ -34,6 +37,9 @@ class ExpressionTreeBuilder
         return tree
     }
 
+    /**
+     *
+     */
     fun buildTree(expression: Array<String>): Node
     {
         // Base case: If the length of the expression array is 1, that means that it is a leaf node,
@@ -48,7 +54,7 @@ class ExpressionTreeBuilder
 
         if (expression.size == 0)
         {
-            println("empty expression")
+            println("empty expression -- buildTree")
         }
 
         // Find the index in the expression array that is the root value of the current expression.
@@ -142,8 +148,8 @@ class ExpressionTreeBuilder
         return rootIndex
     }
 
-    /*
-        Checks whether a given string is an operator.
+    /**
+     * Checks whether a given string is an operator.
      */
     fun isOperator(currentString: String): Boolean
     {
@@ -153,8 +159,8 @@ class ExpressionTreeBuilder
         return operators.contains(currentString)
     }
 
-    /*
-        Returns the priority level of a String operator. Larger number means higher priority.
+    /**
+     * Returns the priority level of a String operator. Larger number means higher priority.
      */
     fun getPriority(currentString: String): Int
     {
@@ -175,6 +181,7 @@ class ExpressionTreeBuilder
         else if (priority3.contains(currentString))
             currentStringPriority = 3
 
+        // Return the priority of the string.
         return currentStringPriority
     }
 

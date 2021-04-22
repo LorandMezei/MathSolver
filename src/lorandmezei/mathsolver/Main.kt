@@ -5,17 +5,25 @@ import lorandmezei.mathsolver.visitors.IVisitor
 
 fun main()
 {
+    // Get expression from user.
     println("Enter expression")
     val input = readLine()!!
 
+    // Parse the input. Turn the String into an Array<String>.
     val inputParser = InputParser()
-    val expression: Array<String> = inputParser.parseInput(input)
+    val expression: Array<String> = inputParser.toStringArray(input)
 
-    val expressionTreeBuilder = ExpressionTreeBuilder()
-    val expressionTree = expressionTreeBuilder.startBuildTree(expression)
+    // Make sure the expression is valid before building tree.
+    if (inputParser.isValid(expression))
+    {
+        // Build the expression tree.
+        val expressionTreeBuilder = ExpressionTreeBuilder()
+        val expressionTree = expressionTreeBuilder.startBuildTree(expression)
 
-    val v: IVisitor = CalculateVisitor()
-    println("Calculated value: " + expressionTree.traverse(v))
+        // Calculate the value in the expression tree.
+        val v: IVisitor = CalculateVisitor()
+        println("Calculated value: " + expressionTree.traverse(v))
+    }
 }
 
 // Sources:
