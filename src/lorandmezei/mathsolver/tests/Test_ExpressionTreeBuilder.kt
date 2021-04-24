@@ -61,6 +61,53 @@ class test_ExpressionTreeBuilder
         assertEquals(0, etb.findRootIndex(arrayOf("6")))
         //                                                 #
     }
+    @Test
+    fun findRootIndexTestExpressionSingleDigitMixedPriority()
+    {
+    }
+    @Test
+    fun findRootIndexTestExpressionMultipleDigitIncreasingPriority()
+    {
+        // 1^2*3/4+5-6
+        // Initial expression.
+        assertEquals(9, etb.findRootIndex(arrayOf("1","^","22","*","33","/","4444","+","55555","-","666666")))
+
+        // Going left of root string (#).
+        assertEquals(7, etb.findRootIndex(arrayOf("1","^","22","*","333","/","4444","+","55555")))
+
+        assertEquals(5, etb.findRootIndex(arrayOf("1","^","22","*","333","/","4444")))
+
+        assertEquals(3, etb.findRootIndex(arrayOf("1","^","22","*","33")))
+
+        assertEquals(1, etb.findRootIndex(arrayOf("1","^","22")))
+
+        assertEquals(0, etb.findRootIndex(arrayOf("1")))
+
+        // Going right of root string.
+        assertEquals(0, etb.findRootIndex(arrayOf("666666")))
+    }
+    @Test
+    fun findRootIndexTestExpressionMultipleDigitDecreasingPriority()
+    {
+        // 1-2+3/4*5^6
+        // Initial expression.
+        assertEquals(3, etb.findRootIndex(arrayOf("1","-","22","+","333","/","4444","*","55555","^","666666")))
+        //                                                             #
+
+        // Going left of root string (#).
+        assertEquals(1, etb.findRootIndex(arrayOf("1","-","22")))
+        //                                                     #
+        assertEquals(0, etb.findRootIndex(arrayOf("1")))
+        //                                                 #
+
+        // Going right of root string.
+        assertEquals(3, etb.findRootIndex(arrayOf("333","/","4444","*","55555","^","666666")))
+        //                                                             #
+        assertEquals(1, etb.findRootIndex(arrayOf("55555","^","666666")))
+        //                                                     #
+        assertEquals(0, etb.findRootIndex(arrayOf("666666")))
+        //                                                 #
+    }
 
     @Test
     fun isOperatorExponent()
