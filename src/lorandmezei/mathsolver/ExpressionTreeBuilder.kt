@@ -150,6 +150,7 @@ class ExpressionTreeBuilder
 
     /**
      * Checks whether a given string is an operator.
+     * Returns true if operator, false if not an operator.
      */
     fun isOperator(currentString: String): Boolean
     {

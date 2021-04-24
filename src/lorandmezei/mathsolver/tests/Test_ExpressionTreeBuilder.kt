@@ -63,6 +63,78 @@ class test_ExpressionTreeBuilder
     }
 
     @Test
+    fun isOperatorExponent()
+    {
+        assertEquals(true, etb.isOperator("^"))
+    }
+    @Test
+    fun isOperatorMultiplication()
+    {
+        assertEquals(true, etb.isOperator("*"))
+    }
+    @Test
+    fun isOperatorDivision()
+    {
+        assertEquals(true, etb.isOperator("/"))
+    }
+    @Test
+    fun isOperatorAddition()
+    {
+        assertEquals(true, etb.isOperator("+"))
+    }
+    @Test
+    fun isOperatorSubtraction()
+    {
+        assertEquals(true, etb.isOperator("-"))
+    }
+    @Test
+    fun isOperatorDigit()
+    {
+        assertEquals(false, etb.isOperator("0"))
+    }
+    @Test
+    fun isOperatorVariable()
+    {
+        assertEquals(false, etb.isOperator("x"))
+    }
+
+    @Test
+    fun getPriorityExponent()
+    {
+        assertEquals(3, etb.getPriority("^"))
+    }
+    @Test
+    fun getPriorityMultiplication()
+    {
+        assertEquals(2, etb.getPriority("*"))
+    }
+    @Test
+    fun getPriorityDivision()
+    {
+        assertEquals(2, etb.getPriority("/"))
+    }
+    @Test
+    fun getPriorityAddition()
+    {
+        assertEquals(1, etb.getPriority("+"))
+    }
+    @Test
+    fun getPrioritySubtraction()
+    {
+        assertEquals(1, etb.getPriority("-"))
+    }
+    @Test
+    fun getPriorityDigit()
+    {
+        assertEquals(-1, etb.getPriority("0"))
+    }
+    @Test
+    fun getPriorityVariable()
+    {
+        assertEquals(-1, etb.getPriority("x"))
+    }
+
+    @Test
     fun hasPriorityCurrentStringDigit()
     {
         // Test current string is digit.
