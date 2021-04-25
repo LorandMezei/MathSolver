@@ -1,29 +1,29 @@
 package lorandmezei.mathsolver.visitors
 
-import lorandmezei.mathsolver.dataStructures.Node
+import lorandmezei.mathsolver.dataStructures.ExpressionTree
 import kotlin.math.pow
 
 class CalculateVisitor : IVisitor
 {
     // Recursive.
-    override fun visit(node : Node) : Any
+    override fun visit(expressionTree : ExpressionTree) : Any
     {
         // Base case if the node is a leaf node (operand).
-        if (node.leftNode == null && node.rightNode == null)
+        if (expressionTree.leftExpressionTree == null && expressionTree.rightExpressionTree == null)
         {
             // Return the value of the node's content.
-            return node.content.toDouble()
+            return expressionTree.content.toDouble()
         }
 
         else
         {
             var answer = 0.0
 
-            val x = node.leftNode!!.accept(this).toString().toDouble()
-            val y = node.rightNode!!.accept(this).toString().toDouble()
+            val x = expressionTree.leftExpressionTree!!.accept(this).toString().toDouble()
+            val y = expressionTree.rightExpressionTree!!.accept(this).toString().toDouble()
 
             // Choose correct operator based on string's characters.
-            val operator = node.content
+            val operator = expressionTree.content
 
             // Switch. Apply the appropriate operation to the nodes' contents.
             when (operator)

@@ -1,7 +1,6 @@
 package lorandmezei.mathsolver
 
 import lorandmezei.mathsolver.dataStructures.ExpressionTree
-import lorandmezei.mathsolver.dataStructures.Node
 
 class ExpressionTreeBuilder
 {
@@ -16,22 +15,16 @@ class ExpressionTreeBuilder
         // Find the index in the expression array that is the root value of the current expression.
         var rootIndex = findRootIndex(expression)
 
-        // Create a new node that will be the root node of the tree.
-        var rootNode = Node()
+        // Set the content of the expression tree to be the root value found in the expression array.
+        tree.content = expression[rootIndex]
 
-        // Set the content of the root node to be the root value found in the expression array.
-        rootNode.content = expression[rootIndex]
-
-        // Set the Tree's root node to be the node that was created.
-        tree.rootNode = rootNode
-
-        // Call the recursive build tree method on the left child of the tree's root, with the subexpression passed
+        // Call the recursive build tree method on the left child of the tree, with the subexpression passed
         // (this subexpression is every value in the expression array that is to the left of the root value).
-        rootNode.leftNode = buildTree(expression.copyOfRange(0, rootIndex))
+        tree.leftExpressionTree = buildTree(expression.copyOfRange(0, rootIndex))
 
-        // Call the recursive build tree method on the right child of the tree's root, with the subexpression passed
+        // Call the recursive build tree method on the right child of the tree, with the subexpression passed
         // (this subexpression is every value in the expression array that is to the right of the root value).
-        rootNode.rightNode = buildTree(expression.copyOfRange(rootIndex + 1, expression.size))
+        tree.rightExpressionTree = buildTree(expression.copyOfRange(rootIndex + 1, expression.size))
 
         // Return the expression tree.
         return tree
@@ -40,16 +33,16 @@ class ExpressionTreeBuilder
     /**
      *
      */
-    fun buildTree(expression: Array<String>): Node
+    fun buildTree(expression: Array<String>): ExpressionTree
     {
         // Base case: If the length of the expression array is 1, that means that it is a leaf node,
         // and it stores only an integer.
         if (expression.size == 1)
         {
-            var currentNode = Node()
-            currentNode.content = expression[0]
+            var expressionTree = ExpressionTree()
+            expressionTree.content = expression[0]
 
-            return currentNode
+            return expressionTree
         }
 
         if (expression.size == 0)
@@ -60,21 +53,21 @@ class ExpressionTreeBuilder
         // Find the index in the expression array that is the root value of the current expression.
         var rootIndex = findRootIndex(expression)
 
-        // Create a new node that will be the current node.
-        var currentNode = Node()
+        // Create a expression tree that is the current expression tree.
+        var expressionTree = ExpressionTree()
 
-        // Set the content of the current node to be the root value found in the expression array.
-        currentNode.content = expression[rootIndex]
+        // Set the content of the current expression tree to be the root value found in the expression array.
+        expressionTree.content = expression[rootIndex]
 
-        // Call the recursive build tree method on the left child of the tree's root, with the subexpression passed
+        // Call the recursive build tree method on the tree's left child, with the subexpression passed
         // (this subexpression is every value in the expression array that is to the left of the root value).
-        currentNode.leftNode = buildTree(expression.copyOfRange(0, rootIndex))
+        expressionTree.leftExpressionTree = buildTree(expression.copyOfRange(0, rootIndex))
 
-        // Call the recursive build tree method on the left right of the tree's root, with the subexpression passed
+        // Call the recursive build tree method on the tree's right child, with the subexpression passed
         // (this subexpression is every value in the expression array that is to the right of the root value).
-        currentNode.rightNode = buildTree(expression.copyOfRange(rootIndex + 1, expression.size))
+        expressionTree.rightExpressionTree = buildTree(expression.copyOfRange(rootIndex + 1, expression.size))
 
-        return currentNode
+        return expressionTree
     }
 
     /**
@@ -158,6 +151,30 @@ class ExpressionTreeBuilder
         var operators = arrayOf("^", "*", "/", "+", "-")
 
         return operators.contains(currentString)
+    }
+
+    /**
+     *
+     */
+    fun isOperand(currentString: String): Boolean
+    {
+        return false
+    }
+
+    /**
+     *
+     */
+    fun isLeftParenthesis(currentString: String): Boolean
+    {
+        return currentString.equals("(")
+    }
+
+    /**
+     *
+     */
+    fun isRightParenthesis(currentString: String): Boolean
+    {
+        return currentString.equals(")")
     }
 
     /**

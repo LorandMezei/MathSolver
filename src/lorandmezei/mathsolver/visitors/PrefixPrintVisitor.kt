@@ -1,21 +1,21 @@
 package lorandmezei.mathsolver.visitors
 
-import lorandmezei.mathsolver.dataStructures.Node
+import lorandmezei.mathsolver.dataStructures.ExpressionTree
 
 class PrefixPrintVisitor : IVisitor
 {
-    override fun visit(node: Node): Any?
+    override fun visit(expressionTree: ExpressionTree): Any?
     {
         // Base case I think.
-        if (node == null)
+        if (expressionTree == null)
         {
             return null
         }
 
         // If the current node is an operator.
-        if (node.leftNode != null && node.rightNode != null)
+        if (expressionTree.leftExpressionTree != null && expressionTree.rightExpressionTree != null)
         {
-            when(node.content)
+            when(expressionTree.content)
             {
                 "^" -> println("exp ")
                 "*" -> println("mul ")
@@ -25,13 +25,13 @@ class PrefixPrintVisitor : IVisitor
             }
 
             // Recursion.
-            node.leftNode!!.accept(this)
-            node.rightNode!!.accept(this)
+            expressionTree.leftExpressionTree!!.accept(this)
+            expressionTree.rightExpressionTree!!.accept(this)
         }
 
         else
         {
-            println(node.content)
+            println(expressionTree.content)
         }
 
         return ""

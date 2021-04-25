@@ -1,8 +1,8 @@
 package lorandmezei.mathsolver.visitors
 
-import lorandmezei.mathsolver.dataStructures.Node
+import lorandmezei.mathsolver.dataStructures.ExpressionTree
 
 interface IVisitor {
     // Visit.
-    fun visit(node : Node) : Any?
+    fun visit(expressionTree : ExpressionTree) : Any?
 }
