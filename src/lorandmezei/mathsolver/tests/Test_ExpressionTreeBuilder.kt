@@ -5,7 +5,7 @@ import kotlin.test.*
 
 import lorandmezei.mathsolver.ExpressionTreeBuilder
 
-class test_ExpressionTreeBuilder
+class test_a
 {
     val etb = ExpressionTreeBuilder()
 

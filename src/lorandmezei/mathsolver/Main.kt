@@ -1,7 +1,6 @@
 package lorandmezei.mathsolver
 
-import lorandmezei.mathsolver.visitors.CalculateVisitor
-import lorandmezei.mathsolver.visitors.IVisitor
+import lorandmezei.mathsolver.visitors.*
 
 fun main()
 {
