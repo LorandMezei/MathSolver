@@ -1,12 +1,13 @@
 package lorandmezei.mathsolver
 
+import lorandmezei.mathsolver.deprecated.ExpressionTreeBuilderIterative
 import lorandmezei.mathsolver.visitors.*
 
 fun main()
 {
     // Get expression from user.
     println("Enter expression")
-    val input = readLine()!!
+    val input = "1+2-3*4/5^6"//readLine()!!
 
     // Parse the input. Turn the String into an Array<String>.
     val inputParser = InputParser()

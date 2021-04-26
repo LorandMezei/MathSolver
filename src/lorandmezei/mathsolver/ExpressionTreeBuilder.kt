@@ -16,7 +16,7 @@ class ExpressionTreeBuilder
         var rootIndex = findRootIndex(expression)
 
         // Set the content of the expression tree to be the root value found in the expression array.
-        tree.content = expression[rootIndex]
+        tree.root = expression[rootIndex]
 
         // Call the recursive build tree method on the left child of the tree, with the subexpression passed
         // (this subexpression is every value in the expression array that is to the left of the root value).
@@ -40,7 +40,7 @@ class ExpressionTreeBuilder
         if (expression.size == 1)
         {
             var expressionTree = ExpressionTree()
-            expressionTree.content = expression[0]
+            expressionTree.root = expression[0]
 
             return expressionTree
         }
@@ -57,7 +57,7 @@ class ExpressionTreeBuilder
         var expressionTree = ExpressionTree()
 
         // Set the content of the current expression tree to be the root value found in the expression array.
-        expressionTree.content = expression[rootIndex]
+        expressionTree.root = expression[rootIndex]
 
         // Call the recursive build tree method on the tree's left child, with the subexpression passed
         // (this subexpression is every value in the expression array that is to the left of the root value).
@@ -158,7 +158,9 @@ class ExpressionTreeBuilder
      */
     fun isOperand(currentString: String): Boolean
     {
-        return false
+        var notOperators = arrayOf("^", "*", "/", "+", "-", "(", ")")
+
+        return !notOperators.contains(currentString)
     }
 
     /**

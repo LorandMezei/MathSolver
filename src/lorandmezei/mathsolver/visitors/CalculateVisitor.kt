@@ -12,7 +12,7 @@ class CalculateVisitor : IVisitor
         if (expressionTree.leftExpressionTree == null && expressionTree.rightExpressionTree == null)
         {
             // Return the value of the node's content.
-            return expressionTree.content.toDouble()
+            return expressionTree.root.toDouble()
         }
 
         else
@@ -23,7 +23,7 @@ class CalculateVisitor : IVisitor
             val y = expressionTree.rightExpressionTree!!.accept(this).toString().toDouble()
 
             // Choose correct operator based on string's characters.
-            val operator = expressionTree.content
+            val operator = expressionTree.root
 
             // Switch. Apply the appropriate operation to the nodes' contents.
             when (operator)

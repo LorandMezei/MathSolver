@@ -2,15 +2,15 @@ package lorandmezei.mathsolver.dataStructures
 
 import lorandmezei.mathsolver.visitors.IVisitor
 
-class ExpressionTree(content: String = "0")
+class ExpressionTree(root: String = "0")
 {
-    var content: String
+    var root: String
     var leftExpressionTree: ExpressionTree?
     var rightExpressionTree : ExpressionTree?
 
     init
     {
-        this.content = content
+        this.root = root
         leftExpressionTree = null
         rightExpressionTree = null
     }

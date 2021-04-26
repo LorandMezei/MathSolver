@@ -15,7 +15,7 @@ class PrefixPrintVisitor : IVisitor
         // If the current node is an operator.
         if (expressionTree.leftExpressionTree != null && expressionTree.rightExpressionTree != null)
         {
-            when(expressionTree.content)
+            when(expressionTree.root)
             {
                 "^" -> println("exp ")
                 "*" -> println("mul ")
@@ -31,7 +31,7 @@ class PrefixPrintVisitor : IVisitor
 
         else
         {
-            println(expressionTree.content)
+            println(expressionTree.root)
         }
 
         return ""
